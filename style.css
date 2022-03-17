@@ -1,0 +1,14 @@
+*{
+    font-family:'Courier New';
+}
+
+button{
+    border-radius: 50px;
+    height: 80px;
+    width: 80px;
+    background-color: white;
+    font-size: 30px;
+    box-shadow: 3px 3px 6px;
+   }
+
+  
