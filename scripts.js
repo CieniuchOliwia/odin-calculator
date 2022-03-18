@@ -22,3 +22,13 @@ function operate(operator, a, b) {
     let result = operator(a, b);
     return result;
 }
+
+
+
+document.querySelectorAll('.button').forEach(el => {
+    el.addEventListener('click', function (event) {
+        let actContent=document.getElementById('display').textContent
+        let content = event.target.textContent;
+        document.getElementById('display').textContent=actContent+content;
+    })
+})
