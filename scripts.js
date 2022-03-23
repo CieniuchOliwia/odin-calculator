@@ -1,21 +1,22 @@
+let a = '';
+let b = '';
+let operator = '';
+let display='';
+
 function add(a, b) {
-    let result = a + b;
-    return result;
+    return (a + b);
 }
 
 function subtract(a, b) {
-    let result = a - b;
-    return result;
+    return (a - b);
 }
 
 function multiply(a, b) {
-    let result = a * b;
-    return result;
+    return (a * b);
 }
 
 function divide(a, b) {
-    let result = a / b;
-    return result;
+    return (a / b);
 }
 
 function operate(operator, a, b) {
@@ -31,31 +32,44 @@ function operate(operator, a, b) {
 }
 
 
-let a = '';
-let b = '';
-let operator = '';
+
 
 document.querySelectorAll('.button').forEach(el => {
-    el.addEventListener('click', function (event) {
-        let actContent = document.getElementById('display').textContent
-        let content = event.target.textContent;
+    el.addEventListener('click', event=> {
+        display=document.getElementById('display');
+        let actContent = display.textContent
+        let textOfPressedButton = event.target.textContent;
         if (event.target.classList.contains('number')) {
-            document.getElementById('display').textContent = '';
-            document.getElementById('display').textContent = actContent + content;
+            if(operator==''){
+                a=Number(a+textOfPressedButton);
+                display.textContent = actContent+textOfPressedButton;
+            }else if (operator!=''){
+                b=Number(b+textOfPressedButton);
+                display.textContent =actContent+textOfPressedButton; 
+            }
+            
         } else if (event.target.classList.contains('operator')) {
-            a = +document.getElementById('display').textContent;
-            operator = event.target.id;
-            //console.log('a=' + a);
-            //console.log('operator=' + operator);
-            document.getElementById('display').textContent = '';
+            if(operator!=''){
+                display.textContent=operate(operator,a,b)+textOfPressedButton;
+                a=operate(operator,a,b);
+                operator = event.target.id;
+                b=0;
+            }else{
+                operator = event.target.id;
+                display.textContent = actContent+textOfPressedButton;
+            }
+  
         } else if (event.target.classList.contains('equals')) {
-            b = +document.getElementById('display').textContent;
-            //console.log('operator=' + operator);
-            //console.log('a=' + a);
-            //console.log('b=' + b);
-            document.getElementById('display').textContent = operate(operator, a, b);
+            display.textContent = operate(operator, a, b);
         }
     })
+})
+
+document.getElementById('AC').addEventListener('click',function(){
+    operator='';
+    display.textContent='';
+    a='';
+    b='';
 })
 
 
