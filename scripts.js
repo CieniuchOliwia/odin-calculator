@@ -2,6 +2,8 @@ let a = '';
 let b = '';
 let operator = '';
 let display='';
+let roundedResult='';
+let indexOfComma='';
 
 function add(a, b) {
     return (a + b);
@@ -31,7 +33,14 @@ function operate(operator, a, b) {
     }
 }
 
-
+function roundResult(result){
+    if(result.length>10 && Number.isInteger(result)==false){
+        indexOfComma=result.indexOf('.');
+        return roundedResult=Math.round(result*Math.pow(10,9-indexOfComma))/(Math.pow(10,9-indexOfComma));
+    }else{
+        return result;
+    }
+}
 
 
 document.querySelectorAll('.button').forEach(el => {
@@ -50,7 +59,7 @@ document.querySelectorAll('.button').forEach(el => {
             
         } else if (event.target.classList.contains('operator')) {
             if(operator!=''){
-                display.textContent=operate(operator,a,b)+textOfPressedButton;
+                display.textContent=roundResult((operate(operator,a,b)).toString())+textOfPressedButton;
                 a=operate(operator,a,b);
                 operator = event.target.id;
                 b=0;
@@ -60,7 +69,7 @@ document.querySelectorAll('.button').forEach(el => {
             }
   
         } else if (event.target.classList.contains('equals')) {
-            display.textContent = operate(operator, a, b);
+            display.textContent = roundResult((operate(operator, a, b)).toString());
         }
     })
 })
@@ -71,5 +80,7 @@ document.getElementById('AC').addEventListener('click',function(){
     a='';
     b='';
 })
+
+
 
 
