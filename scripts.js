@@ -4,6 +4,8 @@ let operator = '';
 let display='';
 let roundedResult='';
 let indexOfComma='';
+let actContent='';
+let textOfPressedButton='';
 
 function add(a, b) {
     return (a + b);
@@ -46,8 +48,8 @@ function roundResult(result){
 document.querySelectorAll('.button').forEach(el => {
     el.addEventListener('click', event=> {
         display=document.getElementById('display');
-        let actContent = display.textContent
-        let textOfPressedButton = event.target.textContent;
+         actContent = display.textContent;
+         textOfPressedButton = event.target.textContent;
         if (event.target.classList.contains('number')) {
             if(operator==''){
                 a=Number(a+textOfPressedButton);
@@ -81,6 +83,22 @@ document.getElementById('AC').addEventListener('click',function(){
     b='';
 })
 
+document.addEventListener('keydown', event=> {
 
+    //console.log(parseInt(event.key));
+    display=document.getElementById('display');
+    actContent = display.textContent;
+    textOfPressedButton = event.key;
+        if (parseInt(event.key)!=='Nan') {
+            if(operator==''){
+                a=Number(a+textOfPressedButton);
+                display.textContent = actContent+textOfPressedButton;
+        }else if (operator!=''){
+           b=Number(b+textOfPressedButton);
+            display.textContent =actContent+textOfPressedButton; 
+        }}
+})
+
+    
 
 
