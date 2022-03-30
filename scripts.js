@@ -28,13 +28,13 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
-    if (operator == 'add') {
+    if (operator == 'add' || operator=='+') {
         return add(a, b);
-    } else if (operator == 'subtract') {
+    } else if (operator == 'subtract' || operator=='-') {
         return subtract(a, b);
-    } else if (operator == 'multiply') {
+    } else if (operator == 'multiply' || operator=='*') {
         return multiply(a, b);
-    } else if (operator == 'divide') {
+    } else if (operator == 'divide' || operator=='/') {
         return divide(a, b);
     }
 }
@@ -92,7 +92,7 @@ document.addEventListener('keydown', event => {
     display = document.getElementById('display');
     actContent = display.textContent;
     textOfPressedButton = event.key;
-    if (parseInt(event.key) !== 'Nan') {
+    if (isNaN(parseInt(event.key)) == false) {
         if (operator == '') {
             a = Number(a + textOfPressedButton);
             display.textContent = actContent + textOfPressedButton;
@@ -100,6 +100,18 @@ document.addEventListener('keydown', event => {
             b = Number(b + textOfPressedButton);
             display.textContent = actContent + textOfPressedButton;
         }
+    } else if (event.key=='+' || event.key=='-' || event.key=='*' || event.key=='/') {
+        if (operator != '') {
+            display.textContent = roundResult((operate(operator, a, b)).toString()) + textOfPressedButton;
+            a = operate(operator, a, b);
+            operator = event.key;
+            b = 0;
+        } else {
+            operator = event.key;
+            display.textContent = actContent + textOfPressedButton;
+        }
+    } else {
+        display.textContent = 'ERROR';
     }
 })
 
