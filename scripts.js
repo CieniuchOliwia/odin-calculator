@@ -7,7 +7,7 @@ let actContent = '';
 
 
 function add(a, b) {
-    return (a + b);
+    return (Number(a) + Number(b));
 }
 
 function subtract(a, b) {
@@ -28,7 +28,7 @@ function divide(a, b) {
 
 function operate(operator, a, b) {
     if (operator == 'add' || operator=='+') {
-        return add(Number(a), Number(b));
+        return add(a,b);
     } else if (operator == 'subtract' || operator=='-') {
         return subtract(a, b);
     } else if (operator == 'multiply' || operator=='*') {
@@ -55,10 +55,10 @@ document.querySelectorAll('.button').forEach(el => {
         let textOfPressedButton = event.target.textContent;
         if (event.target.classList.contains('number')) {
             if (operator == '') {
-                a =(a + textOfPressedButton);
+                a+=textOfPressedButton;
                 display.textContent = actContent + textOfPressedButton;
-            } else if (operator != '') {
-                b = (b + textOfPressedButton);
+            } else {
+                b+=textOfPressedButton;
                 display.textContent = actContent + textOfPressedButton;
             }
 
