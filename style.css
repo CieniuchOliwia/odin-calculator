@@ -19,7 +19,7 @@ button{
     border-radius: 15px;
     height: 55px;
     width: 80px;
-    background-color: rgb(46,144,171);
+    background-color: rgb(85, 141, 156);
     font-size: 45px;
     box-shadow: 3px 3px 6px black;
     color:white;
@@ -44,11 +44,12 @@ button{
 #container{
     width:380px;
     border: 3px solid black;
-    background-color: RGB(51,155,184);
+    background-color: rgb(129, 182, 197);
+    border-radius: 20px;
 }
 
 .ACandBS{
-    background-color: RGB(53,113,130);
+    background-color: rgb(62, 92, 100);
     width: 170px;
 }
 
