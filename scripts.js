@@ -27,13 +27,13 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
-    if (operator == 'add' || operator=='+') {
-        return add(a,b);
-    } else if (operator == 'subtract' || operator=='-') {
+    if (operator == 'add' || operator == '+') {
+        return add(a, b);
+    } else if (operator == 'subtract' || operator == '-') {
         return subtract(a, b);
-    } else if (operator == 'multiply' || operator=='*') {
+    } else if (operator == 'multiply' || operator == '*') {
         return multiply(a, b);
-    } else if (operator == 'divide' || operator=='/') {
+    } else if (operator == 'divide' || operator == '/') {
         return divide(a, b);
     }
 }
@@ -55,10 +55,10 @@ document.querySelectorAll('.button').forEach(el => {
         let textOfPressedButton = event.target.textContent;
         if (event.target.classList.contains('number')) {
             if (operator == '') {
-                a+=textOfPressedButton;
+                a += textOfPressedButton;
                 display.textContent = actContent + textOfPressedButton;
             } else {
-                b+=textOfPressedButton;
+                b += textOfPressedButton;
                 display.textContent = actContent + textOfPressedButton;
             }
 
@@ -67,7 +67,7 @@ document.querySelectorAll('.button').forEach(el => {
                 display.textContent = roundResult((operate(operator, a, b)).toString()) + textOfPressedButton;
                 a = operate(operator, a, b);
                 operator = event.target.id;
-                b = 0;
+                b = '';
             } else {
                 operator = event.target.id;
                 display.textContent = actContent + textOfPressedButton;
@@ -75,11 +75,14 @@ document.querySelectorAll('.button').forEach(el => {
 
         } else if (event.target.classList.contains('equals')) {
             display.textContent = roundResult((operate(operator, a, b)).toString());
+            a = operate(operator, a, b);
+            b = '';
         }
     })
 })
 
 document.getElementById('AC').addEventListener('click', function () {
+    display = document.getElementById('display');
     operator = '';
     display.textContent = '';
     a = '';
@@ -91,20 +94,20 @@ document.addEventListener('keydown', event => {
     display = document.getElementById('display');
     actContent = display.textContent;
     let textOfPressedButton = event.key;
-    if (!isNaN(parseInt(event.key)) || event.key=='.') {
+    if (!isNaN(parseInt(event.key)) || event.key == '.') {
         if (operator) { //operator nie jest pusty
             b = (b + textOfPressedButton);
             display.textContent = actContent + textOfPressedButton;
         } else {
-            a =(a + textOfPressedButton);
+            a = (a + textOfPressedButton);
             display.textContent = actContent + textOfPressedButton;
         }
-    } else if (textOfPressedButton=='+' || textOfPressedButton=='-' || textOfPressedButton=='*' || textOfPressedButton=='/') {
+    } else if (textOfPressedButton == '+' || textOfPressedButton == '-' || textOfPressedButton == '*' || textOfPressedButton == '/') {
         if (operator) {
             display.textContent = roundResult((operate(operator, a, b)).toString()) + textOfPressedButton;
             a = operate(operator, a, b);
             operator = textOfPressedButton;
-            b = 0;
+            b = '';
         } else {
             operator = textOfPressedButton;
             display.textContent = actContent + textOfPressedButton;
@@ -114,6 +117,19 @@ document.addEventListener('keydown', event => {
     }
 })
 
+
+document.getElementById('BS').addEventListener('click', function () {
+    display = document.getElementById('display');
+    if (display.textContent.slice(display.textContent.length - 1, display.textContent.length) == '+' || display.textContent.slice(display.textContent.length - 1, display.textContent.length)=='-' || display.textContent.slice(display.textContent.length - 1, display.textContent.length)=='/' || display.textContent.slice(display.textContent.length - 1, display.textContent.length)=='*'){
+        display.textContent=display.textContent.substring(0, display.textContent.length - 1);
+} else if (b) {
+    b = b.toString().substring(0, b.toString().length - 1);
+    display.textContent = display.textContent.substring(0, display.textContent.length - 1);
+} else if (a) {
+    a = a.toString().substring(0, a.toString().length - 1);
+    display.textContent = display.textContent.substring(0, display.textContent.length - 1);
+}
+})
 
 
 
