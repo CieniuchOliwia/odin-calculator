@@ -1,17 +1,22 @@
 *{
-    font-family:'Orbitron';
+    font-family:'Share Tech Mono';
 }
 
-#display{
+.display{
     font-size: 43px;
     background-color: rgb(210,210,210);
     height: 45px;
     width: 350px;
-    margin-bottom: 20px;
-    margin-top:20px;
     margin-left: 15px;
     margin-right: 15px;
     text-align: right;
+}
+
+#displayForA{
+    margin-top:20px;
+}
+#displayForB{
+    margin-bottom:20px;
 }
 
 
