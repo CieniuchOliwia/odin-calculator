@@ -22,7 +22,7 @@ function multiply(a, b) {
 
 function divide(a, b) {
     if (b == 0) {
-        alert("You can't divide by 0!"); 
+        alert("You can't divide by 0!");
     } else {
         return (a / b);
     }
@@ -64,11 +64,13 @@ document.querySelectorAll('.button').forEach(el => {
                 a += textOfPressedButton;
                 display.textContent = actContent + textOfPressedButton;
                 checkIfNumberIsTooLong();
+                checkIfThereAreSeveralCommas(a);
 
             } else {
                 b += textOfPressedButton;
                 displayB.textContent = actContentB + textOfPressedButton;
                 checkIfNumberIsTooLong();
+                checkIfThereAreSeveralCommas(b);
             }
 
         } else if (event.target.classList.contains('operator')) {
@@ -123,10 +125,12 @@ document.addEventListener('keydown', event => {
             b = (b + textOfPressedButton);
             displayB.textContent = actContentB + textOfPressedButton;
             checkIfNumberIsTooLong();
+            checkIfThereAreSeveralCommas(b);
         } else {
             a = (a + textOfPressedButton);
             display.textContent = actContent + textOfPressedButton;
             checkIfNumberIsTooLong();
+            checkIfThereAreSeveralCommas(a);
         }
     } else if (textOfPressedButton == '+' || textOfPressedButton == '-' || textOfPressedButton == '*' || textOfPressedButton == '/') {
         if (operator) {
@@ -136,6 +140,7 @@ document.addEventListener('keydown', event => {
             displayOperator.textContent = textOfPressedButton;
             b = '';
             displayB.textContent = '';
+            checkIfResultIsTooLong();
         } else {
             operator = textOfPressedButton;
             displayOperator.textContent = textOfPressedButton;
@@ -147,6 +152,7 @@ document.addEventListener('keydown', event => {
         operator = '';
         displayB.textContent = '';
         displayOperator.textContent = '';
+        checkIfResultIsTooLong();
     }
 })
 
@@ -154,37 +160,52 @@ document.addEventListener('keydown', event => {
 
 document.getElementById('BS').addEventListener('click', function () {
     display = document.getElementById('displayForA');
-    if (display.textContent.slice(display.textContent.length - 1, display.textContent.length) == '+' || display.textContent.slice(display.textContent.length - 1, display.textContent.length) == '-' || display.textContent.slice(display.textContent.length - 1, display.textContent.length) == '/' || display.textContent.slice(display.textContent.length - 1, display.textContent.length) == '*') {
-        display.textContent = display.textContent.substring(0, display.textContent.length - 1);
-    } else if (b) {
+    displayB = document.getElementById('displayForB');
+    displayOperator = document.getElementById('displayForOperator');
+    if (b) {
         b = b.toString().substring(0, b.toString().length - 1);
-        display.textContent = display.textContent.substring(0, display.textContent.length - 1);
+        displayB.textContent = displayB.textContent.substring(0, displayB.textContent.length - 1)
+    } else if (displayOperator.textContent == '+' || displayOperator.textContent == '-' || displayOperator.textContent == '/' || displayOperator.textContent == '*') {
+        displayOperator.textContent = displayOperator.textContent.substring(0, displayOperator.textContent.length - 1);
     } else if (a) {
         a = a.toString().substring(0, a.toString().length - 1);
         display.textContent = display.textContent.substring(0, display.textContent.length - 1);
     }
 })
 
+
 function checkIfNumberIsTooLong() {
     if (a.length > 15) {
         alert("You've entered too many numbers!");
-        document.getElementById('displayForA').textContent=actContent;
-        a=document.getElementById('displayForA').textContent;
-        
-    } else if(b.length>15){
+        document.getElementById('displayForA').textContent = actContent;
+        a = document.getElementById('displayForA').textContent;
+
+    } else if (b.length > 15) {
         alert("You've entered too many numbers!");
-        document.getElementById('displayForB').textContent=actContentB;
-        b=document.getElementById('displayForB').textContent;
+        document.getElementById('displayForB').textContent = actContentB;
+        b = document.getElementById('displayForB').textContent;
     }
 }
 
-function checkIfResultIsTooLong(){
-    if(a.toString().length>15){
+function checkIfResultIsTooLong() {
+    if (a.toString().length > 15) {
         alert("Sorry! The result is too long! Try again :)");
-        document.getElementById('displayForA').textContent='';
-        a='';
-        document.getElementById('displayForOperator').textContent=''
-        operator='';
+        document.getElementById('displayForA').textContent = '';
+        a = '';
+        document.getElementById('displayForOperator').textContent = ''
+        operator = '';
     }
 }
 
+function checkIfThereAreSeveralCommas(number) {
+    let i = 0;
+    let numberOfCommas = 0;
+    for (i = 0; i <= (number.toString().length - 1); i++) {
+        if (number.charAt(i) == '.') {
+            numberOfCommas = numberOfCommas + 1;
+            if (numberOfCommas >= 2) {
+                alert("That's not a number! Please check number of commas and correct the entered number!");
+            }
+        };
+    }
+}
