@@ -4,8 +4,8 @@ let operator = '';
 let display = '';
 let roundedResult = '';
 let actContent = '';
-let displayB='';
-let displayOperator='';
+let displayB = '';
+let displayOperator = '';
 
 
 function add(a, b) {
@@ -22,7 +22,7 @@ function multiply(a, b) {
 
 function divide(a, b) {
     if (b == 0) {
-        alert("You can't divide by 0!"); // jak zzmeniam operator z / na inny to psuje sie :)
+        alert("You can't divide by 0!"); 
     } else {
         return (a / b);
     }
@@ -54,28 +54,33 @@ document.querySelectorAll('.button').forEach(el => {
     el.addEventListener('click', event => {
         display = document.getElementById('displayForA');
         actContent = display.textContent;
-        displayB=document.getElementById('displayForB');
-        actContentB=displayB.textContent;
-        displayOperator=document.getElementById('displayForOperator');
-        
+        displayB = document.getElementById('displayForB');
+        actContentB = displayB.textContent;
+        displayOperator = document.getElementById('displayForOperator');
+
         let textOfPressedButton = event.target.textContent;
         if (event.target.classList.contains('number')) {
             if (operator == '') {
                 a += textOfPressedButton;
                 display.textContent = actContent + textOfPressedButton;
+                checkIfNumberIsTooLong();
+
             } else {
                 b += textOfPressedButton;
                 displayB.textContent = actContentB + textOfPressedButton;
+                checkIfNumberIsTooLong();
             }
 
         } else if (event.target.classList.contains('operator')) {
             if (operator != '') {
                 display.textContent = roundResult((operate(operator, a, b)).toString());
-                displayOperator.textContent=textOfPressedButton;
-                displayB.textContent='';
-                a = operate(operator, a, b);
+                displayOperator.textContent = textOfPressedButton;
+                displayB.textContent = '';
+                a = roundResult((operate(operator, a, b)).toString());
                 operator = event.target.id;
                 b = '';
+                checkIfResultIsTooLong();
+
             } else {
                 operator = event.target.id;
                 displayOperator.textContent = textOfPressedButton;
@@ -83,11 +88,12 @@ document.querySelectorAll('.button').forEach(el => {
 
         } else if (event.target.classList.contains('equals')) {
             display.textContent = roundResult((operate(operator, a, b)).toString());
-            displayB.textContent='';
-            displayOperator.textContent='';
-            a = operate(operator, a, b);
-            b = ''; // problem->jesli zrobię *, potem = i xnowu *->zamiast a mam 0 w wyświetlaczu
-            operator='';
+            displayB.textContent = '';
+            displayOperator.textContent = '';
+            a = roundResult((operate(operator, a, b)).toString());
+            b = '';
+            operator = '';
+            checkIfResultIsTooLong();
         }
     })
 })
@@ -98,8 +104,8 @@ document.getElementById('AC').addEventListener('click', function () {
     displayOperator = document.getElementById('displayForOperator')
     operator = '';
     display.textContent = '';
-    displayB.textContent='';
-    displayOperator.textContent='';
+    displayB.textContent = '';
+    displayOperator.textContent = '';
     a = '';
     b = '';
 })
@@ -113,32 +119,34 @@ document.addEventListener('keydown', event => {
 
     let textOfPressedButton = event.key;
     if (!isNaN(parseInt(event.key)) || event.key == '.') {
-        if (operator) { //operator nie jest pusty
+        if (operator) {
             b = (b + textOfPressedButton);
             displayB.textContent = actContentB + textOfPressedButton;
+            checkIfNumberIsTooLong();
         } else {
             a = (a + textOfPressedButton);
             display.textContent = actContent + textOfPressedButton;
+            checkIfNumberIsTooLong();
         }
     } else if (textOfPressedButton == '+' || textOfPressedButton == '-' || textOfPressedButton == '*' || textOfPressedButton == '/') {
         if (operator) {
             display.textContent = roundResult((operate(operator, a, b)).toString());
-            a = operate(operator, a, b);
+            a = roundResult((operate(operator, a, b)).toString());
             operator = textOfPressedButton;
-            displayOperator.textContent=textOfPressedButton;
+            displayOperator.textContent = textOfPressedButton;
             b = '';
-            displayB.textContent='';
+            displayB.textContent = '';
         } else {
             operator = textOfPressedButton;
             displayOperator.textContent = textOfPressedButton;
         }
     } else if (textOfPressedButton == '=') {
         display.textContent = roundResult((operate(operator, a, b)).toString());
-        a = operate(operator, a, b);
+        a = roundResult((operate(operator, a, b)).toString());
         b = '';
-        operator='';
-        displayB.textContent='';
-        displayOperator.textContent='';
+        operator = '';
+        displayB.textContent = '';
+        displayOperator.textContent = '';
     }
 })
 
@@ -157,7 +165,26 @@ document.getElementById('BS').addEventListener('click', function () {
     }
 })
 
+function checkIfNumberIsTooLong() {
+    if (a.length > 15) {
+        alert("You've entered too many numbers!");
+        document.getElementById('displayForA').textContent=actContent;
+        a=document.getElementById('displayForA').textContent;
+        
+    } else if(b.length>15){
+        alert("You've entered too many numbers!");
+        document.getElementById('displayForB').textContent=actContentB;
+        b=document.getElementById('displayForB').textContent;
+    }
+}
 
-
-
+function checkIfResultIsTooLong(){
+    if(a.toString().length>15){
+        alert("Sorry! The result is too long! Try again :)");
+        document.getElementById('displayForA').textContent='';
+        a='';
+        document.getElementById('displayForOperator').textContent=''
+        operator='';
+    }
+}
 
