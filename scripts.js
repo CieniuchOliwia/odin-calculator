@@ -61,15 +61,19 @@ document.querySelectorAll('.button').forEach(el => {
         let textOfPressedButton = event.target.textContent;
         if (event.target.classList.contains('number')) {
             if (operator == '') {
+                if (!validateDisplayLength(a)){
+                    return;
+                }
                 a += textOfPressedButton;
                 display.textContent = actContent + textOfPressedButton;
-                checkIfNumberIsTooLong();
                 checkIfThereAreSeveralCommas(a);
 
             } else {
+                if (!validateDisplayLength(b)){
+                    return;
+                }
                 b += textOfPressedButton;
                 displayB.textContent = actContentB + textOfPressedButton;
-                checkIfNumberIsTooLong();
                 checkIfThereAreSeveralCommas(b);
             }
 
@@ -122,14 +126,18 @@ document.addEventListener('keydown', event => {
     let textOfPressedButton = event.key;
     if (!isNaN(parseInt(event.key)) || event.key == '.') {
         if (operator) {
+            if (!validateDisplayLength(b)){
+                return;
+            }
             b = (b + textOfPressedButton);
             displayB.textContent = actContentB + textOfPressedButton;
-            checkIfNumberIsTooLong();
             checkIfThereAreSeveralCommas(b);
         } else {
+            if (!validateDisplayLength(a)){
+                return;
+            }
             a = (a + textOfPressedButton);
             display.textContent = actContent + textOfPressedButton;
-            checkIfNumberIsTooLong();
             checkIfThereAreSeveralCommas(a);
         }
     } else if (textOfPressedButton == '+' || textOfPressedButton == '-' || textOfPressedButton == '*' || textOfPressedButton == '/') {
@@ -174,18 +182,16 @@ document.getElementById('BS').addEventListener('click', function () {
 })
 
 
-function checkIfNumberIsTooLong() {
-    if (a.length > 15) {
-        alert("You've entered too many numbers!");
-        document.getElementById('displayForA').textContent = actContent;
-        a = document.getElementById('displayForA').textContent;
 
-    } else if (b.length > 15) {
+function validateDisplayLength(displayNumber) {
+    if (displayNumber.length > 14) {
         alert("You've entered too many numbers!");
-        document.getElementById('displayForB').textContent = actContentB;
-        b = document.getElementById('displayForB').textContent;
+        return false;
     }
+
+    return true;
 }
+
 
 function checkIfResultIsTooLong() {
     if (a.toString().length > 15) {
